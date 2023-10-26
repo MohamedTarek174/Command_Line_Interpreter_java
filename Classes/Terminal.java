@@ -27,6 +27,7 @@ public class Terminal {
     }
 
     public String pwd(){
+//        System.out.println("arg");
         return "Current Directory: " + System.getProperty("user.dir");
     }
 
@@ -115,7 +116,7 @@ public class Terminal {
             case "history":
                 history();
                 break;
-        
+
             default:
                 System.out.println("Command not found or invalid parameters are entered! ");
                 break;
