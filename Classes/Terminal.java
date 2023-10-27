@@ -2,8 +2,6 @@ package Classes;
 import java.io.File;
 import java.util.*;
 
-import java.util.Scanner;
-
 public class Terminal {
     Parser parser;
 
@@ -37,7 +35,7 @@ public class Terminal {
         
     }
 
-    public void ls(String[] args) {
+    public List<String> ls(String[] args) {
             String path = pwd();
             File Cur_path = new File(path);
             File files[] = Cur_path.listFiles();
@@ -50,17 +48,15 @@ public class Terminal {
         if (args.length == 0) {
             for (String Names : list_names)
                 System.out.println(Names);
-            return;
+
         }
-        if (args[0] == "-r") {
-            System.out.println("snfnwef");
+        else if (args.length > 0 && args[0].equals("-r")) {
             for(int i = list_names.size()-1;i >= 0;i--)
                 System.out.println(list_names.get(i));
         }else
             System.out.println("Command not found or invalid parameters are entered! ");
 
-
-
+        return list_names;
     }
 
 
