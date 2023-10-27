@@ -40,11 +40,62 @@ public class Terminal {
     }
 
     public void mkdir(String[] args){
-        
+        if(args.length == 0){
+            System.out.println("mkdir: missing operand");
+        } else {
+            for(String arg : args){             // loop through all files name given in args to create them
+                File dir = new File(arg);
+
+                if(dir.exists()){
+                    System.out.println("mkdir: cannot create directory '" + arg + "': File exists");
+                } else {
+                    boolean success = dir.mkdir();
+
+                    if(success){
+                        System.out.println("mkdir: created directory '" + arg + "'");
+                    } else {
+                        System.out.println("mkdir: cannot create directory '" + arg + "'");
+                    }
+                }
+            }
+        }
     }
 
     public void rmdir(String[] args){
-        
+
+        if(args.length == 0){
+            System.out.println("rmdir: missing operand");
+        } else {
+                File dir = new File(args[0]);
+
+                if (args[0].equals("*")) {
+                    
+                    try { 
+                        File f = new File(System.getProperty("user.dir")); 
+                        File[] files = f.listFiles();                // list all files in the directory
+
+                        for (int i = 0; i < files.length; i++) {     // delete all files in the directory if it's empty
+                            files[i].delete(); 
+                        } 
+
+                    } catch (Exception e) { 
+                        System.err.println(e.getMessage()); 
+                    }
+
+                }else if(dir.exists()){
+                    boolean success = dir.delete();
+
+                    if(success){
+                        System.out.println("rmdir: removed directory '" + args[0] + "'");
+                    } else {
+                        System.out.println("rmdir: cannot remove directory '" + args[0] + "'");
+                    }
+
+                } else {
+                    System.out.println("rmdir: failed to remove '" + args[0] + "': No such file or directory");
+                }
+
+        }
     }
 
     public void touch(String[] args){
