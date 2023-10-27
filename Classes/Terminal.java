@@ -1,5 +1,7 @@
 package Classes;
 import java.io.File;
+import java.util.*;
+
 import java.util.Scanner;
 
 public class Terminal {
@@ -35,14 +37,29 @@ public class Terminal {
         
     }
 
-    public void ls() {//Sorted alphabetically by default
-        String path = pwd();
-        File obj1 = new File(path);
-        File files[] = obj1.listFiles();
-        for (File Name : files){
-            System.out.println(Name.getName());
+    public void ls(String input) {
+            String path = pwd();
+            File Cur_path = new File(path);
+            File files[] = Cur_path.listFiles();
+            List<String> list_names = new ArrayList<String>();
+            for (File Name : files) {
+                list_names.add(Name.getName());//Will add sorted alphabetically by default
+
+            }
+
+        if (input == "normal")
+            for (String Names : list_names)
+                System.out.println(Names);
+
+        if (input == "reverse") {
+            for(int i = list_names.size()-1;i >= 0;i--)
+                System.out.println(list_names.get(i));
         }
+
+
     }
+
+
 
     public void mkdir(String[] args){
         if(args.length == 0){
@@ -134,7 +151,7 @@ public class Terminal {
             case "echo":
                 echo(parser.getArgs()[0]);
                 break;
-            case "pwd":
+            case "pwd"://DONE
                 System.out.print("Current Directory: ");
                 System.out.println(pwd());
                 break;
@@ -142,15 +159,19 @@ public class Terminal {
                 cd(parser.getArgs());
                 break;
 
-            case "ls":
-                ls();
+            case "ls"://DONE
+                ls("normal");
                 break;
 
-            case "mkdir":
+            case "ls-r"://DONE
+                ls("reverse");
+                break;
+
+            case "mkdir"://DONE
                 mkdir(parser.getArgs());
                 break;
 
-            case "rmdir":
+            case "rmdir"://DONE
                 rmdir(parser.getArgs());
                 break;
 
