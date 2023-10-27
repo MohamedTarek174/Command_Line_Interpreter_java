@@ -37,7 +37,7 @@ public class Terminal {
         
     }
 
-    public void ls(String input) {
+    public void ls(String[] args) {
             String path = pwd();
             File Cur_path = new File(path);
             File files[] = Cur_path.listFiles();
@@ -47,14 +47,18 @@ public class Terminal {
 
             }
 
-        if (input == "normal")
+        if (args.length == 0) {
             for (String Names : list_names)
                 System.out.println(Names);
-
-        if (input == "reverse") {
+            return;
+        }
+        if (args[0] == "-r") {
+            System.out.println("snfnwef");
             for(int i = list_names.size()-1;i >= 0;i--)
                 System.out.println(list_names.get(i));
-        }
+        }else
+            System.out.println("Command not found or invalid parameters are entered! ");
+
 
 
     }
@@ -160,12 +164,9 @@ public class Terminal {
                 break;
 
             case "ls"://DONE
-                ls("normal");
+                ls(parser.getArgs());
                 break;
 
-            case "ls-r"://DONE
-                ls("reverse");
-                break;
 
             case "mkdir"://DONE
                 mkdir(parser.getArgs());
