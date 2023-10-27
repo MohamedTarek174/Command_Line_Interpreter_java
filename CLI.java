@@ -4,7 +4,6 @@ import Classes.Parser;
 
 
 public class CLI {
-
     public static void main(String[] args) {
         Terminal terminal = new Terminal();
         Parser parser = new Parser();
@@ -20,11 +19,7 @@ public class CLI {
             if (parser.getCommandName().equals("exit")) {
                 break;
             }
-
             terminal.chooseCommandAction();
-
-            
-            
         }
 
         input.close();

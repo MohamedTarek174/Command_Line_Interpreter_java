@@ -28,15 +28,20 @@ public class Terminal {
 
     public String pwd(){
 //        System.out.println("arg");
-        return "Current Directory: " + System.getProperty("user.dir");
+        return System.getProperty("user.dir");
     }
 
     public void cd(String[] args){
         
     }
 
-    public void ls(){
-        
+    public void ls() {//Sorted alphabetically by default
+        String path = pwd();
+        File obj1 = new File(path);
+        File files[] = obj1.listFiles();
+        for (File Name : files){
+            System.out.println(Name.getName());
+        }
     }
 
     public void mkdir(String[] args){
@@ -130,6 +135,7 @@ public class Terminal {
                 echo(parser.getArgs()[0]);
                 break;
             case "pwd":
+                System.out.print("Current Directory: ");
                 System.out.println(pwd());
                 break;
             case "cd":
