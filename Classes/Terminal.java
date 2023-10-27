@@ -53,8 +53,9 @@ public class Terminal {
         else if (args.length > 0 && args[0].equals("-r")) {
             for(int i = list_names.size()-1;i >= 0;i--)
                 System.out.println(list_names.get(i));
-        }else
-            System.out.println("Command not found or invalid parameters are entered! ");
+        }
+//        else
+//            System.out.println("Command not found or invalid parameters are entered! ");
 
         return list_names;
     }
@@ -124,6 +125,25 @@ public class Terminal {
         
     }
 
+    public void rm(String[] args){
+
+        if(args.length==0){
+            System.out.println("rm: missing operand");
+        }
+        else{
+            if(ls(parser.getArgs()).contains(args[0])){
+                File file = new File(args[0]);
+                System.out.println(file.getName()+" Deleted");
+                file.delete();
+            }
+            else{
+                System.out.println("rm: can't remove " + '\'' + args[0] + '\'' + " : No such file or directory");
+            }
+
+        }
+
+    }
+
     public void cp(String[] args){
         
     }
@@ -175,6 +195,11 @@ public class Terminal {
             case "touch":
                 touch(parser.getArgs());
                 break;
+
+            case "rm":
+                rm(parser.getArgs());
+                break;
+
 
             case "cp":
                 cp(parser.getArgs());
