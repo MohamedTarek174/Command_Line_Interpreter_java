@@ -1,5 +1,6 @@
 package Classes;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Terminal {
@@ -121,8 +122,21 @@ public class Terminal {
         }
     }
 
-    public void touch(String[] args){
-        
+    public void touch(String[] args) throws IOException {
+
+        if(args.length == 0) {
+            System.out.println("touch: missing operand");
+        }
+        else if (args.length==1) {
+            File file = new File(args[0]);
+            if(file.createNewFile()){
+                System.out.println(args[0]+" File Created");
+            }else
+                System.out.println("File "+args[0]+" already exists");
+        }
+        else{
+            System.out.println("Command not found or invalid parameters are entered! ");
+        }
     }
 
     public void rm(String[] args){
@@ -164,7 +178,7 @@ public class Terminal {
     }
 
     //This method will choose the suitable command method to be called
-    public void chooseCommandAction(){
+    public void chooseCommandAction() throws IOException {
 
         switch (parser.getCommandName()) {
 
@@ -192,11 +206,11 @@ public class Terminal {
                 rmdir(parser.getArgs());
                 break;
 
-            case "touch":
+            case "touch"://DONE
                 touch(parser.getArgs());
                 break;
 
-            case "rm":
+            case "rm"://DONE
                 rm(parser.getArgs());
                 break;
 
