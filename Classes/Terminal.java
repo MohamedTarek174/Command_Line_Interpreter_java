@@ -1,6 +1,9 @@
 package Classes;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 
 public class Terminal {
@@ -158,8 +161,33 @@ public class Terminal {
 
     }
 
-    public void cp(String[] args){
-        
+    public void cp(String[] args) throws IOException {
+
+        if(args.length==0 || args.length==1){
+            System.out.println("cp: missing operand");
+        }
+        else{
+            FileInputStream src = new FileInputStream(args[0]);
+            FileOutputStream dest = new FileOutputStream(args[1]);
+
+            int i;
+
+            while ((i = src.read()) != -1) {
+                dest.write(i);
+            }
+
+                src.close();
+                dest.close();
+
+        }
+
+
+
+
+
+
+
+
     }
 
     public void cat(String[] args){
@@ -215,7 +243,7 @@ public class Terminal {
                 break;
 
 
-            case "cp":
+            case "cp"://Done
                 cp(parser.getArgs());
                 break;
 
