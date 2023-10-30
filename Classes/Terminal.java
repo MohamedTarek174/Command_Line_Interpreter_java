@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.Scanner;
+
 
 public class Terminal {
     Parser parser;
@@ -191,13 +193,52 @@ public class Terminal {
     }
 
     public void cat(String[] args){
-        
+        if (args.length == 1) {
+
+            try{
+                File file = new File(args[0]);          // get the file & scan it
+                Scanner scan = new Scanner(file);
+
+            while (scan.hasNextLine()){                 // print the file line by line
+                System.out.println(scan.nextLine());
+            }   
+            scan.close();
+
+        }catch (Exception e) {                          // if the file doesn't exist
+            System.out.println("Can't open file "+args[0]+" : No such file or directory ");
+            }   
+            
+        }
+
+
+        else if (args.length == 2) {
+        try{
+                File file1 = new File(args[0]);         // get the first file & scan it
+                Scanner scan1 = new Scanner(file1); 
+                
+                while (scan1.hasNextLine()){            // print the first file line by line
+                    System.out.println(scan1.nextLine());
+                }  
+
+                File file2 = new File(args[1]);         // get the second file & scan it
+                Scanner scan2 = new Scanner(file2);
+
+                while (scan2.hasNextLine()){            // print the second file line by line
+                    System.out.println(scan2.nextLine());
+                }
+                scan1.close();
+                scan2.close();
+
+        }catch (Exception e) {                          // if any file doesn't exist
+            System.out.println("Can't open file " +args[0]+ " or " + args[1] + " : No such file or directory ");
+            } 
     }
+}
 
     public void wc(String[] args){
         
     }
-     
+
     // >
     // >>
 
@@ -247,7 +288,7 @@ public class Terminal {
                 cp(parser.getArgs());
                 break;
 
-            case "cat":
+            case "cat"://Done
                 cat(parser.getArgs());
                 break;
 
