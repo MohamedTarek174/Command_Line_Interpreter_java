@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Terminal {
     Parser parser;
+    static List<String> historyList = new ArrayList<String>();
 
 
     public Terminal(){
@@ -18,10 +19,12 @@ public class Terminal {
 
     public Terminal(Parser parser){
         this.parser = parser;
+        historyList.add(parser.getCommandName());       // add the command to the history list
     }
 
     public void setParser(Parser parser){
         this.parser = parser;
+        historyList.add(parser.getCommandName());       // add the command to the history list
     }
 
     public Parser getParser(){
@@ -273,7 +276,11 @@ public class Terminal {
     // >>
 
     public void history(){
-        
+
+        for (int i = 0; i < historyList.size(); i++) {              // print the history list
+            System.out.println(i + 1 + "  " + historyList.get(i));
+        }
+
     }
 
     //This method will choose the suitable command method to be called
@@ -281,7 +288,7 @@ public class Terminal {
 
         switch (parser.getCommandName()) {
 
-            case "echo":
+            case "echo"://Done
                 echo(parser.getArgs()[0]);
                 break;
             case "pwd"://DONE
@@ -326,7 +333,7 @@ public class Terminal {
                 wc(parser.getArgs());
                 break;
 
-            case "history":
+            case "history"://Done
                 history();
                 break;
 
