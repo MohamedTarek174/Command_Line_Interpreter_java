@@ -240,7 +240,33 @@ public class Terminal {
 }
 
     public void wc(String[] args){
-        
+        if (args.length == 1) {
+            
+            try{
+                int lines = 0;
+                int words = 0;
+                int chars = 0;
+
+                File file = new File(args[0]);          // get the file & scan it
+                Scanner scan = new Scanner(file);
+
+            while (scan.hasNextLine()){                 
+                String line = scan.nextLine();          // get the line
+                lines++;                                // add the current line
+                chars += line.length();                 // the length of the line is the number of chars
+                String[] wordsArray = line.split(" ");  // split the line into words
+                words += wordsArray.length;             // count the words
+            }   
+            System.out.println(lines + " " + words + " " + chars + " " + args[0]);
+            scan.close();
+
+        }catch (Exception e) {                          // if the file doesn't exist
+            System.out.println("Can't open file "+args[0]+" : No such file or directory ");
+            }   
+            
+        }else{                                          // if the user entered more than one file
+            System.out.println("Invalid parameters are entered! ");
+        }
     }
 
     // >
