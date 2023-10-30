@@ -322,7 +322,7 @@ public class Terminal {
                 cat(parser.getArgs());
                 break;
 
-            case "wc":
+            case "wc"://Done
                 wc(parser.getArgs());
                 break;
 
