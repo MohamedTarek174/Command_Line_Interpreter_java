@@ -40,8 +40,49 @@ public class Terminal {
         return System.getProperty("user.dir");
     }
 
-    public void cd(String[] args){
-        
+    public void cd(String[] args) {
+        if (args.length == 0) {
+            String homeDir = System.getProperty("user.home");
+            System.setProperty("user.dir", homeDir);
+        } else if (args.length == 1) { //Used to make another else with no condition (Will be the path)
+            if (args[0].equals("..")) {
+                File curDir = new File(System.getProperty("user.dir"));
+                File parentDir = curDir.getParentFile();
+                if (parentDir != null && parentDir.isDirectory()) {
+                    System.setProperty("user.dir", parentDir.getAbsolutePath());//change the default path to the parent one
+                } else {
+                    System.out.println("Something went wrong , Can't return to the prev directory.");
+                }
+            }else {//For the Path
+                String newDirectoryPath = new String();
+                for (String arg : args)
+                    newDirectoryPath = arg + " ";
+
+                File newDir = new File(newDirectoryPath);
+
+                if (newDir.isAbsolute()) {
+                    if (newDir.isDirectory()) {
+                        System.setProperty("user.dir", newDir.getAbsolutePath());
+                    } else {
+                        System.out.println("The specified path "+newDir.getAbsolutePath()+" is not a directory.");
+                    }
+                } else {
+                    File currentDirectory = new File(System.getProperty("user.dir"));
+                    File newDirectoryFile = new File(currentDirectory, newDirectoryPath);
+
+                    if (newDirectoryFile.isDirectory()) {
+                        System.setProperty("user.dir", newDirectoryFile.getAbsolutePath());
+                    }
+                    else {
+                        System.err.println("The specified path is not a directory.");
+                    }
+                }
+            }
+        } else {//More than one arg
+            for(String ar : args)
+                System.out.println(ar);
+            System.err.println("Command not found or invalid parameters are entered! ");
+        }
     }
 
     public List<String> ls(String[] args) {
@@ -64,11 +105,10 @@ public class Terminal {
                 System.out.println(list_names.get(i));
         }
 //        else
-//            System.out.println("Command not found or invalid parameters are entered! ");
+//            System.err.println("Command not found or invalid parameters are entered! ");
 
         return list_names;
     }
-
 
 
     public void mkdir(String[] args){
@@ -338,7 +378,7 @@ public class Terminal {
                 break;
 
             default:
-                System.out.println("Command not found or invalid parameters are entered! ");
+                System.err.println("Command not found or invalid parameters are entered! ");
                 break;
         }
     }
