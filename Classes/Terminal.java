@@ -233,6 +233,10 @@ public class Terminal {
             System.out.println("Can't open file " +args[0]+ " or " + args[1] + " : No such file or directory ");
             } 
     }
+
+    else{
+        System.out.println("nvalid parameters are entered! ");
+    }
 }
 
     public void wc(String[] args){
