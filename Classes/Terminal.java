@@ -206,33 +206,60 @@ public class Terminal {
 
     }
 
+    private static void copyDirectory(File source, File destination)throws IOException{
+
+        if (source.isDirectory()) {
+            if (!destination.exists()) {
+                destination.mkdir();
+            }
+            String[] files = source.list();
+
+            if (files != null) {
+                for (String file : files) {
+                    File srcFile = new File(source, file);
+                    File destFile = new File(destination, file);
+
+                    // Recursive copy
+                    copyDirectory(srcFile, destFile);
+                }
+            }
+        } else {
+            Files.copy(source.toPath(), destination.toPath());
+        }
+    }
+
     public void cp(String[] args) throws IOException {
 
         if(args.length==0 || args.length==1){
             System.out.println("cp: missing operand");
         }
         else{
-            FileInputStream src = new FileInputStream(args[0]);
-            FileOutputStream dest = new FileOutputStream(args[1]);
+            if (args[0].equals("-r")) {
 
-            int i;
+                try {
+                    File srcDir = new File(args[1]);
+                    File destDir = new File(args[2]);
 
-            while ((i = src.read()) != -1) {
-                dest.write(i);
-            }
+                    copyDirectory(srcDir, destDir);
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
+
+            }else{
+                FileInputStream src = new FileInputStream(args[0]);
+                FileOutputStream dest = new FileOutputStream(args[1]);
+
+                int i;
+
+                while ((i = src.read()) != -1) {
+                    dest.write(i);
+                }
 
                 src.close();
                 dest.close();
-
+            }
         }
-
-
-
-
-
-
-
-
     }
 
     public void cat(String[] args){
