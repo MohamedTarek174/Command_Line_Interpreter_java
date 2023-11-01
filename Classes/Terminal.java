@@ -54,60 +54,63 @@ public class Terminal {
                     System.out.println("Something went wrong , Can't return to the prev directory.");
                 }
             }else {//For the Path
-                String newDirectoryPath = new String();
-                for (String arg : args)
-                    newDirectoryPath = arg + " ";
-
+                String newDirectoryPath = args[0];
                 File newDir = new File(newDirectoryPath);
+                try {
 
-                if (newDir.isAbsolute()) {
-                    if (newDir.isDirectory()) {
-                        System.setProperty("user.dir", newDir.getAbsolutePath());
-                    } else {
-                        System.out.println("The specified path "+newDir.getAbsolutePath()+" is not a directory.");
-                    }
-                } else {
-                    File currentDirectory = new File(System.getProperty("user.dir"));
-                    File newDirectoryFile = new File(currentDirectory, newDirectoryPath);
 
-                    if (newDirectoryFile.isDirectory()) {
-                        System.setProperty("user.dir", newDirectoryFile.getAbsolutePath());
-                    }
-                    else {
-                        System.err.println("The specified path is not a directory.");
+                    if (newDir.isAbsolute()) {//If Absolute argument
+                        if (newDir.isDirectory()) {
+                            System.setProperty("user.dir", newDir.getAbsolutePath());//Make that new one the current user directory
+                        } else {
+                            System.out.println("The specified path " + newDir.getAbsolutePath() + " is not a directory.");
+                        }
+                    } else {//If Directory argument
+                        File currentDirectory = new File(System.getProperty("user.dir"));
+                        File newDirectoryFile = new File(currentDirectory, newDirectoryPath);//Change the current one to the new one
+
+                        if (newDirectoryFile.isDirectory()) {
+                            System.setProperty("user.dir", newDirectoryFile.getAbsolutePath());//Turn into Absolute to make it user directory
+                        } else {
+                            System.err.println("The specified path is not a directory.");
+                        }
                     }
                 }
+                catch (Exception e) {//For some errors appear
+                    System.err.println(e.getMessage());
+                }
             }
-        } else {//More than one arg
-            for(String ar : args)
-                System.out.println(ar);
+        } else {
             System.err.println("Command not found or invalid parameters are entered! ");
         }
     }
 
     public List<String> ls(String[] args) {
-            String path = pwd();
-            File Cur_path = new File(path);
-            File files[] = Cur_path.listFiles();
-            List<String> list_names = new ArrayList<String>();
+        String path = pwd();
+        File Cur_path = new File(path);
+        File files[] = Cur_path.listFiles();
+        List<String> list_names = new ArrayList<String>();
+        try {
             for (File Name : files) {
                 list_names.add(Name.getName());//Will add sorted alphabetically by default
 
             }
 
-        if (args.length == 0) {
-            for (String Names : list_names)
-                System.out.println(Names);
-
+            if (args.length == 0) {
+                for (String Names : list_names)
+                    System.out.println(Names);
+            } else if (args.length > 0 && args[0].equals("-r")) {
+                for (int i = list_names.size() - 1; i >= 0; i--)
+                    System.out.println(list_names.get(i));
+            }
         }
-        else if (args.length > 0 && args[0].equals("-r")) {
-            for(int i = list_names.size()-1;i >= 0;i--)
-                System.out.println(list_names.get(i));
+        catch (Exception e) {//Some errors appear while hidden directory is null
+            System.err.println(e.getMessage());
         }
 //        else
 //            System.err.println("Command not found or invalid parameters are entered! ");
 
-        return list_names;
+        return list_names;//Using it in some other functions
     }
 
 
@@ -362,7 +365,7 @@ public class Terminal {
                 System.out.print("Current Directory: ");
                 System.out.println(pwd());
                 break;
-            case "cd":
+            case "cd"://DONE
                 cd(parser.getArgs());
                 break;
 

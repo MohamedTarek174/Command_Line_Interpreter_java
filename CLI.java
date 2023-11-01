@@ -22,7 +22,6 @@ public class CLI {
             }
             terminal.chooseCommandAction();
         }
-
         input.close();
     }
     
