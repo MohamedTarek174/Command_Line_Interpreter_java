@@ -12,7 +12,7 @@ public class CLI {
         String command;
         
         while (true) {
-            System.out.print("current: " + System.getProperty("user.dir") + ": ");
+            System.out.print("current: " + System.getProperty("user.dir") + ": " + '\n');
             command = input.nextLine();
             parser.parse(command);
             terminal.setParser(parser);
@@ -21,6 +21,7 @@ public class CLI {
                 break;
             }
             terminal.chooseCommandAction();
+            System.out.println('\n');
         }
         input.close();
     }

@@ -362,7 +362,6 @@ public class Terminal {
                 echo(parser.getArgs()[0]);
                 break;
             case "pwd"://DONE
-                System.out.print("Current Directory: ");
                 System.out.println(pwd());
                 break;
             case "cd"://DONE
